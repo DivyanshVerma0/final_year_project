@@ -83,7 +83,9 @@ section{
 }
 
 .btn:hover{
-    background:var(--dark-color);
+    background: #b9b4b495;
+    color: black;
+    transition-delay: 0.2s;
 }
 
 .header .header-1{
@@ -696,6 +698,7 @@ section{
 .loader-container img{
     height:10rem;
 }
+
 
 
 
