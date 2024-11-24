@@ -46,6 +46,12 @@
         "name":" The Plague",
         "price": 200,
         "image": "image/8.png"
+    },
+    {
+        "id": 9,
+        "name": " Your Name",
+        "price": 29,
+        "image": "image/book-3.png"
     }
 
 ]

@@ -159,3 +159,87 @@ var swiper = new Swiper(".blogs-slider", {
   },
 });
 
+// Get elements
+const hamburger = document.getElementById('hamburger');
+const cartMenu = document.getElementById('cartMenu');
+const closeCart = document.getElementById('closeCart');
+
+// Toggle Cart Menu
+hamburger.addEventListener('click', () => {
+    cartMenu.classList.toggle('open');
+});
+
+// Close Cart Menu
+closeCart.addEventListener('click', () => {
+    cartMenu.classList.remove('open');
+});
+
+
+// JavaScript for Cart Functionality
+const cartBtn = document.getElementById("hamburger");
+const closeCartBtn = document.getElementById("closeCart");
+const cartSidebar = document.getElementById("cart-sidebar");
+const cartItemsContainer = document.getElementById("cart-items");
+const cartTotal = document.getElementById("cart-total");
+const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+let cart = [];
+
+// Open Cart
+cartBtn.addEventListener("click", () => {
+    cartSidebar.style.right = "0";
+});
+
+// Close Cart
+closeCartBtn.addEventListener("click", () => {
+    cartSidebar.style.right = "-100%";
+});
+
+// Add to Cart
+addToCartButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        const bookElement = event.target.parentElement;
+        const bookId = bookElement.dataset.id;
+        const bookTitle = bookElement.dataset.title;
+        const bookPrice = parseFloat(bookElement.dataset.price);
+
+        addToCart(bookId, bookTitle, bookPrice);
+    });
+});
+
+function addToCart(id, title, price) {
+    const existingItem = cart.find(item => item.id === id);
+
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ id, title, price, quantity: 1 });
+    }
+
+    updateCartUI();
+}
+
+function updateCartUI() {
+    cartItemsContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+        cart.forEach(item => {
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cart-item");
+            cartItem.innerHTML = `
+                <p>${item.title} - $${item.price.toFixed(2)} x ${item.quantity}</p>
+            `;
+            cartItemsContainer.appendChild(cartItem);
+        });
+    }
+
+    updateTotal();
+}
+
+function updateTotal() {
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotal.textContent = total.toFixed(2);
+}
+
